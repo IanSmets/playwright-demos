@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page}) => {
-    test.setTimeout(3000);
+    test.setTimeout(2000);
     //New pages
     const context = page.context();
     const pagePromise = context.waitForEvent('page');
@@ -11,7 +11,11 @@ test('test', async ({ page}) => {
     const popupPromise = page.waitForEvent('popup');
     await page.goto('https://portfolio-wietsev.vercel.app/');
 
+    //screenshot tester
+    await expect(page.locator('#name')).toHaveScreenshot('home.png');
+
     await page.getByRole('heading', { name: 'R_P_S' }).hover();
+
     await page.getByRole('link', { name: 'Live site' }).click();
     const page1 = await pagePromise;
     await page1.waitForLoadState();
